@@ -1,0 +1,74 @@
+var kartypostaci = tab[]:
+----+----------
+ 01 | Zabójca
+ 02 | Morderca
+ 03 | Magik
+ 04 | Król
+ 05 | Biskup
+ 06 | Kupiec
+ 07 | Architekt
+ 08 | Genera³
+
+var usunjedna = function(){
+  var indeks = 0;
+  var zostaja = tab[];
+  var zostaje = random from kartypostaci;
+  for (i=0, i<kartypostaci.length, i++){
+    if (kartypostaci[i] !== zostaje){
+      zostaje[indeks] = kartypostaci[i];
+      indeks += 1;
+    }
+  }
+}
+
+var usundwie = function(){
+  var indeks = 0;
+  var tempindeks = 0;
+  var temp = tab[];
+  var zostaja = tab[];
+  var zostaje1 = random from kartypostaci[];
+  for (i=0, i<kartypostaci.length, i++){
+    if (kartypostaci[i] !== zostaje1){
+      temp[tempindeks] = kartypostaci[i];
+      tempindeks += 1;
+    }
+  }
+  var zostaje2 = random from temp[];
+  for (i=0, i<temp.length, i++){
+    if (temp[i] !== zostaje2){
+      zostaja[indeks] = temp[i];
+      indeks += 1;
+    }
+  }
+}
+
+var usunkilka = function(liczbagraczy){
+  if (liczbagraczy === 4 || liczbagraczy === 5){
+    switch (liczbagraczy){
+      case 4:
+        usundwie();
+        break;
+      case 5:
+        usunjedna();
+        break;
+    }
+  }
+}
+
+var wybierzpostac = function(){
+  
+}
+
+var gra = function(){
+  while(liczbadzielnic < 8){
+    usunjedna();
+    usunkilka(liczbapostaci);
+    wybierzpostac();
+    for (i = 0, i<liczbagraczy, i++){
+      gracz = zostaja[i];
+      wywolajgracza(gracz);
+    }
+  }
+  liczpunkty();
+  dajzwyciezce();
+}

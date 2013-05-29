@@ -3,10 +3,84 @@
 		<script src="/socket.io/socket.io.js" type='text/javascript'></script>
     	<script src="http://code.jquery.com/jquery-2.0.1.min.js" type='text/javascript'></script>
     	<script src="/javascript/functions.js" type="text/javascript" charset="utf-8"></script>
+    	<link rel="stylesheet" type="text/css" href="stylesheets/styles.css"></link>
     	<title>Cytadela - średniowieczna gra karciana</title>
     	<meta http-equiv="Content-Type" content="text/html"; charset="utf-8">
-
 	</head>
 	<body>
+		<div id="container">
+			<div id="left">
+				<div id="abandonned">
+					<p>
+						Tutaj wyświetlę informacje o odrzuconych kartach z początku rozgrywki.
+					</p>
+				</div>
+				<div id="choosePersonCard">
+					<p>
+						Tutaj będzie mechanizm wyboru karty postaci.
+					</p>
+				</div>
+			</div>
+			<div id="center">
+				<div id="currentPlayer">
+					<p>
+						AKTUALNY GRACZ:
+					</p>
+				</div>
+				<div id="choices">
+					<div id="action">
+						<input type="button" value="Pobierz 2 sztuki złota" />
+						<input type="button" value="Pobierz 2 karty dzielnic" />
+					</div>
+					<div id="build">
+						<input type="button" value="Buduję" />
+						<input type="button" value="Nie buduję" />
+						<select>
+							<option>Numer1</option>
+							<option>Numer2</option>
+						</select>
+					</div>
+					<div id="personal">
+						<input type="button" value="Akcja personalna postaci" />
+					</div>
+				</div>
+				<div id="districts">
+					<table>
+						<tr>
+							<td>1</td>
+							<td>2</td>
+							<td>3</td>
+							<td>4</td>
+							<td>5</td>
+							<td>6</td>
+							<td>7</td>
+							<td>8</td>
+						</tr>
+					</table>
+				</div>
+			</div>
+			<div id="right">
+				<div id="users">
+					<p>
+						Tutaj będzie lista graczy
+					</p>
+				</div>
+				<div id="gameInfo">
+					<p>
+						Tutaj będzie info o grze
+					</p>
+				</div>
+				<div id="info">
+					<p>
+						Tutaj będzie info o dzielnicach
+					</p>
+				</div>
+				<div id="details">
+					<p>
+						Tutaj szczegóły gracza
+					</p>
+				</div>
+			</div>
+		</div>
 	</body>
 </html>

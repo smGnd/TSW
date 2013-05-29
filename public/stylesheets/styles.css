@@ -1,0 +1,116 @@
+#left{
+	position: relative;
+	float: left;
+	width: 150px;
+	min-height: 200px;
+	background-color: #FF0000;
+}
+
+#abandonned{
+	margin: 5px, 5px, 5px, 5px;
+	margin-left: 5px;
+	margin-right: 5px;
+	background-color: #FFFFC0;
+}
+
+#choosePersonCard{
+	margin: 5px, 5px, 5px, 5px;
+	margin-left: 5px;
+	margin-right: 5px;
+	background-color: #FFF000;
+}
+
+
+#center{
+	position: absolute;
+	margin-left: 160px;
+	margin-right: 10px;
+	min-height: 200px;
+	background-color: #00FF00;
+	text-align: center;
+	width=
+	padding-left: 5px;
+	padding-top: 5px;
+	padding-right: 5px;
+	padding-bottom: 5px;
+}
+
+#choices{
+	background-color: #C0C0C0;
+	padding-left: 5px;
+	padding-top: 5px;
+	padding-right: 5px;
+	padding-bottom: 5px;
+}
+
+#currentPlayer{
+	margin: 5px, 5px, 5px, 5px;
+	margin-left: 5px;
+	margin-right: 5px;
+	background-color: #FFFFC0;
+}
+
+#action{
+	margin: 5px, 5px, 5px, 5px;
+	margin-left: 5px;
+	margin-right: 5px;
+	background-color: #FFF000;
+}
+
+#build{
+	margin: 5px, 5px, 5px, 5px;
+	margin-left: 5px;
+	margin-right: 5px;
+	background-color: #FFFFC0;
+}
+
+#personal{
+	margin: 5px, 5px, 5px, 5px;
+	margin-left: 5px;
+	margin-right: 5px;
+	background-color: #FFF000;
+}
+
+#districts{
+	margin: 5px, 5px, 5px, 5px;
+	margin-left: 5px;
+	margin-right: 5px;
+	background-color: #FFF000;
+}
+
+#right{
+	position: relative;
+	float: right;
+	width: 150px;
+	min-height: 200px;
+	background-color: #0000FF;
+}
+
+#users{
+	margin: 5px, 5px, 5px, 5px;
+	margin-left: 5px;
+	margin-right: 5px;
+	background-color: #FFFFC0;
+}
+
+#gameInfo{
+	margin: 5px, 5px, 5px, 5px;
+	margin-left: 5px;
+	margin-right: 5px;
+	background-color: #FFF000;
+}
+
+#info{
+	margin: 5px, 5px, 5px, 5px;
+	margin-left: 5px;
+	margin-right: 5px;
+	background-color: #FFFFC0;
+}
+
+#details{
+	margin: 5px, 5px, 5px, 5px;
+	margin-left: 5px;
+	margin-right: 5px;
+	background-color: #FFF000;
+}
+
