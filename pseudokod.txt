@@ -1,13 +1,8 @@
-var kartypostaci = tab[]:
-----+----------
- 01 | Zabójca
- 02 | Morderca
- 03 | Magik
- 04 | Król
- 05 | Biskup
- 06 | Kupiec
- 07 | Architekt
- 08 | Genera³
+var kartypostaci = tablica obiektow kartapostaci,
+    kartydzielnic = tablica obiektow kartadzielnicy,
+    zostaja,
+    zostaja2,
+    liczbadzielnic = 0;
 
 var usunjedna = function(){
   var indeks = 0;
@@ -56,19 +51,53 @@ var usunkilka = function(liczbagraczy){
 }
 
 var wybierzpostac = function(){
-  
+  od najni¿szego id do najwy¿szego:
+    poka¿ zostaje2
+    po klikniêciu w button:
+      zapisz postac do graja[i], gdzie "i" to numer postaci
+      zlikwiduj postaæ z zostaje2
 }
 
 var gra = function(){
   while(liczbadzielnic < 8){
     usunjedna();
     usunkilka(liczbapostaci);
+    graja[] = zosaja2[]
     wybierzpostac();
     for (i = 0, i<liczbagraczy, i++){
-      gracz = zostaja[i];
+      gracz = graja[i];
       wywolajgracza(gracz);
     }
   }
   liczpunkty();
   dajzwyciezce();
+}
+
+wywolajgracza(gracz){
+  if (akcja = zloto){
+    gracz.zloto += 2
+  } else {
+    nowekarty[0] = pobierzkartedzielnicy();
+    nowekarty[1] = pobierzkartedzielnicy();
+    gracz.karty += nowekarty;
+  }
+  if (budowanie = tak){
+    po kliknieciu buttona:
+      buduj(gracz, budowla);
+  }
+  if (specjalnaakcja){
+    wykonajspecjalna(gracz);
+  }
+}
+
+var pobierzkartedzielnicy = function(){
+  return random from kartydzielnic[];
+}
+
+var buduj = function(gracz, budowla){
+  gracz.zloto -= budowla.koszt;
+  gracz.budowle[gracz.budowle.length+1] = budowla;
+  if (liczbadzielnic < gracz.budowle.length){
+    liczbadzielnic = gracz.budowle.length;
+  }
 }

@@ -1,3 +1,10 @@
+body{
+	background-color: #AAC5E4;
+	background-image: url('images/bgtop.png');
+	background-position: top;
+	background-repeat: repeat-x;
+}
+
 #left{
 	position: relative;
 	float: left;
