@@ -45,7 +45,6 @@ io.sockets.on('connection', function(socket){
     socket.broadcast.to('room1').emit('updateinfo', 'SERVER', user + ' dołączył do gry!');
     socket.emit('updateusers', usednames);
     socket.broadcast.to('room1').emit('updateusers', usednames);
-    console.log('SOCKET ID:                          ' + socket.id);
   });
 
   socket.on('userReady', function(){
@@ -56,12 +55,18 @@ io.sockets.on('connection', function(socket){
         console.log('Rozpoczynamy grę');
         socket.broadcast.to('room1').emit('startgame', 'zaczynamy');
         socket.emit('startgame', 'zaczynamy');
-        graj();
+        //graj();
       }
   });
 
-});
+  socket.on('action', function(data){
+    console.log('Użytkownik ' + socket.username + ' wykonał akcję.');
+    socket.broadcast.to('room1').emit('updateinfo', 'SERVER', socket.username + ' wykonał akcję: ' + data);
+    socket.emit('updateinfo', 'wykonałeś akcję: ' + data);
+  });
 
+});
+/*
 function graj(){
   while(liczbadzielnic < 8){
     ustalKolejnosc();
@@ -69,26 +74,37 @@ function graj(){
       wywolajGracza(i);
     }
   }
-  liczPunkty();
-  dajZwyciezce();
+  socket.emit('koniecgry');
+  socket.on('punkty');
+  liczPunktyDajZwyciezce();
 }
 
 function ustalKolejnosc(){
   /*
   numerJeden = math.random() * 10 % liczba graczy
   graja[0] = usednames[numerJeden];
-  socket.emit (zaczyna usednames[numerJeden]);
+  for(i=1, i<usednames.length, i++){
+    graja[i] = usednames[numerJeden+i];
+    j = i
+  }
+  for (i = j, i<usednames.length, i++){
+    graja[i] = usednames[numerJeden-i];
+  }
   */
-}
+//}
 
-function wywolajGracza(numer){
+//function wywolajGracza(numer){
+  /*
+  socket emit(play);
+  */
+//}
 
-}
-
-function liczPunkty(){
-
-}
-
-function dajZwyciezce(){
-
-}
+//function liczPunktyDajZwyciezce(){
+  /*
+  for (i=0, i<usednames.length, i++){
+   sortowanie kto ma najwięcej punktów
+   zapisanie do tablicy pod indeksem 0
+  }
+  emit (wynik[0])
+  */
+//}

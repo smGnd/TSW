@@ -11,16 +11,9 @@
 	<body>
 		<div id="container">
 			<div id="left">
-				<div id="abandonned">
-					<p>
-						Tutaj wyświetlę informacje o odrzuconych kartach z początku rozgrywki.
-					</p>
+				<div id="cardsToPlay">
 				</div>
 				<div id="choosePersonCard">
-					<p>
-						Tutaj będzie mechanizm wyboru karty postaci.
-					</p>
-				</div>
 			</div>
 			<div id="center">
 				<div id="isReady">
@@ -28,15 +21,12 @@
 				</div>
 				<div id="choices">
 					<div id="action">
-						<input type="button" value="Pobierz 2 sztuki złota" />
-						<input type="button" value="Pobierz 2 karty dzielnic" />
+						<input type="button" name="btnGold" id="btnGold" value="Pobierz 2 sztuki złota" />
+						<input type="button" name="btnDis" id="btnDis" value="Pobierz 2 karty dzielnic" />
 					</div>
 					<div id="build">
-						<input type="button" value="Buduję" onClick="buduj();"/>
-						<input type="button" value="Nie buduję" />
-					</div>
-					<div id="personal">
-						<input type="button" value="Akcja personalna postaci" />
+						<input type="button" name="btnBuild" id="btnBuild" value="Buduję" onClick="buduj();"/>
+						<input type="button" name="btnBuild" id="btnNotBuild" value="Nie buduję" />
 					</div>
 				</div>
 				<div id="districts">
@@ -46,6 +36,8 @@
 							<td>2</td>
 							<td>3</td>
 							<td>4</td>
+						</tr>
+						<tr>
 							<td>5</td>
 							<td>6</td>
 							<td>7</td>
