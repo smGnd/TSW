@@ -1,10 +1,3 @@
-
-/*var express = require('express')
-    , app = express.createServer()
-    , io = require('socket.io').listen(app)
-    , port = process.env.PORT || 3000;
-*/
-
 var express = require('express'),
     app = express()
   , http = require('http')
@@ -13,6 +6,8 @@ var express = require('express'),
 
 var usernames = {};
 var usednames = [];
+var readyUsers = 0;
+var wybudowaneDzielnice = 0;
 
 // listen for new web clients:
 server.listen(3000, function(){
@@ -43,7 +38,7 @@ io.sockets.on('connection', function(socket){
     socket.username = user;
     usernames[user] = user;
     usednames[usednames.length] = socket.username;
-    console.log('--------------------------' + user + ' joined  the game! ----------------------------');
+    console.log('Użytkownik ' + user + ' dołączył do gry\nID socketa: ' + socket.id);
     usernames[user] = user;
 
     socket.join('room1');
@@ -53,4 +48,47 @@ io.sockets.on('connection', function(socket){
     console.log('SOCKET ID:                          ' + socket.id);
   });
 
+  socket.on('userReady', function(){
+    console.log('Użytkownik ' + socket.username + ' gotowy do gry');
+    socket.broadcast.to('room1').emit('updateinfo', 'SERVER', socket.username + ' jest gotów do gry');
+    readyUsers += 1;
+    if (readyUsers === usednames.length){
+        console.log('Rozpoczynamy grę');
+        socket.broadcast.to('room1').emit('startgame', 'zaczynamy');
+        socket.emit('startgame', 'zaczynamy');
+        graj();
+      }
+  });
+
 });
+
+function graj(){
+  while(liczbadzielnic < 8){
+    ustalKolejnosc();
+    for (var i=0; i<graja.length; i++){
+      wywolajGracza(i);
+    }
+  }
+  liczPunkty();
+  dajZwyciezce();
+}
+
+function ustalKolejnosc(){
+  /*
+  numerJeden = math.random() * 10 % liczba graczy
+  graja[0] = usednames[numerJeden];
+  socket.emit (zaczyna usednames[numerJeden]);
+  */
+}
+
+function wywolajGracza(numer){
+
+}
+
+function liczPunkty(){
+
+}
+
+function dajZwyciezce(){
+
+}

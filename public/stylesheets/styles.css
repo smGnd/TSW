@@ -5,6 +5,10 @@ body{
 	background-repeat: repeat-x;
 }
 
+#container{
+	padding-top: 100px;
+}
+
 #left{
 	position: relative;
 	float: left;
@@ -76,6 +80,7 @@ body{
 	margin-left: 5px;
 	margin-right: 5px;
 	background-color: #FFF000;
+	display: none;
 }
 
 #districts{
