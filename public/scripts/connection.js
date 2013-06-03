@@ -2,8 +2,11 @@ var socket = io.connect(window.location.hostname);
 
 var kartyNaRece = [];
 var kartyDzielnic = [];
+var wybudowane = [];
 var iloscKartNaRece = 0;
-var iloscSztabekZlota;
+var iloscSztabekZlota = 0;
+var indeksBudowanej = 0;
+var iloscWybudowanychDzielnic = 0;
 
 function dzielnica (nazwa, koszt, kolor){
   this.nazwa = nazwa;
@@ -36,13 +39,15 @@ $(function(){
     $('#btnReady').attr('disabled', false);
     $('#btnGold').attr('disabled', false);
     $('#btnDis').attr('disabled', false);
+    $('#btnBuild').attr('disabled', false);
+    $('#btnNotBuild').attr('disabled', false);
     $("#btnReady").click(function(){
       socket.emit('userReady');
       $(this).attr('disabled', true);
     });
 
   $('#btnGold').click(function(){
-    iloscSztabekZlota += 2;
+    dodajSztabkiZlota(2);
     socket.emit('action', 'pobranie dwóch sztuk zlota');
     $('#btnGold').attr('disabled', true);
     $('#btnDis').attr('disabled', true);
@@ -56,12 +61,48 @@ $(function(){
     $('#build').toggle();
   });
 
-  $('#btnBuild').click(function(){});
-  $('#btnNotBuild').click(function(){});
+  $('#btnBuild').click(function(){
+    var taBuduje;
+    doZbudowania = prompt('Jaką dzielnicę chcesz wybudować?');
+    for(i=0; i<kartyNaRece.length; i++){
+      if (doZbudowania === kartyNaRece[i].nazwa){
+        taBuduje = kartyNaRece[i];
+        indeksBudowanej = i;
+        break;
+      }
+    }
+    if (taBuduje){
+      if(iloscSztabekZlota < taBuduje.koszt){
+          alert('Nie masz odpowiedniej ilości złota, tracisz kolejkę.');
+          socket.emit('build', 'traci kolejkę');
+      } else {
+        kosztBudowy = 0-taBuduje.koszt;
+        dodajSztabkiZlota(kosztBudowy);
+        kartyNaRece.splice(indeksBudowanej, 1);
+        drukujKartyNaRece();
+        wybudowane[iloscWybudowanychDzielnic] = taBuduje;
+        iloscWybudowanychDzielnic += 1;
+        $('#bld1').append(taBuduje.nazwa);
+        socket.emit('build', 'buduje');
+      }
+    } else {
+      alert('Nie masz odpowiedniej ilości złota, tracisz kolejkę.');
+      socket.emit('build', 'traci kolejkę');
+    }
+    socket.emit('endofround');
+    $('#btnBuild').attr('disabled', true);
+    $('#btnNotBuild').attr('disabled', true);
+  });
+  $('#btnNotBuild').click(function(){
+    socket.emit('build', 'nie buduje');
+    socket.emit('endofround');
+    $('#btnBuild').attr('disabled', true);
+    $('#btnNotBuild').attr('disabled', true);
+  });
 
 });
 
-// on connection to server, ask for user's name with an anonmyous callback
+// socke connection to server, ask for user's name with an anonmyous callback
 socket.on('connect', function() {
   //call the server-side function 'adduser' and send one parameter (value of prompt)
   socket.emit('adduser', prompt("Jak się nazywasz?"));
@@ -80,8 +121,16 @@ socket.on('updateusers', function(usednames) {
 
 socket.on('startgame', function(data){
   $('#action').toggle();
-  iloscSztabekZlota = 5;
   losowanieKart(5);
+  dodajSztabkiZlota(1);
+});
+
+socket.on('newround', function(){
+  $('#build').toggle();
+  $('#btnGold').attr('disabled', false);
+  $('#btnDis').attr('disabled', false);
+  $('#btnBuild').attr('disabled', false);
+  $('#btnNotBuild').attr('disabled', false);
 });
 
 function losowanieKart(ilosc){
@@ -90,12 +139,25 @@ function losowanieKart(ilosc){
     kartyNaRece[i] = kartyDzielnic[nowaKarta];
   }
   console.log(kartyNaRece);
-  dodrukujKarty(ilosc);
+  drukujKartyNaRece();
 }
 
-function dodrukujKarty(nowekarty){
+/*function dodrukujKarty(nowekarty){
   for (i=0; i<nowekarty; i++){
     tekst = kartyNaRece[i].nazwa + ', koszt: ' + kartyNaRece[i].koszt + ' złota.<br/>';
     $('#cardsToPlay').append(tekst);
   }
+}*/
+
+function drukujKartyNaRece(){
+  var tekst = "";
+  for (i=0; i<kartyNaRece.length; i++){
+    tekst += kartyNaRece[i].nazwa + ', koszt: ' + kartyNaRece[i].koszt + ' sztuk złota. <br/>';
+  }
+  $('#cardsToPlay').html(tekst);
+}
+
+function dodajSztabkiZlota(ilosc){
+  iloscSztabekZlota += ilosc;
+  $('#details').text('Ilość sztabek złota: ' + iloscSztabekZlota);
 }

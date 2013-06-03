@@ -22,14 +22,6 @@ body{
 	background-color: #FFFFC0;
 }
 
-#choosePersonCard{
-	margin: 5px, 5px, 5px, 5px;
-	margin-left: 5px;
-	margin-right: 5px;
-	background-color: #FFF000;
-}
-
-
 #center{
 	margin-left: 320px;
 	margin-right: 10px;
@@ -71,14 +63,6 @@ body{
 	margin-left: 5px;
 	margin-right: 5px;
 	background-color: #FFFFC0;
-	display: none;
-}
-
-#personal{
-	margin: 5px, 5px, 5px, 5px;
-	margin-left: 5px;
-	margin-right: 5px;
-	background-color: #FFF000;
 	display: none;
 }
 

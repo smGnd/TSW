@@ -7,10 +7,11 @@ var express = require('express'),
 var usernames = {};
 var usednames = [];
 var readyUsers = 0;
+var koniecKolejkiUsers = 0;
 var wybudowaneDzielnice = 0;
 
 // listen for new web clients:
-server.listen(3000, function(){
+server.listen(16777, function(){
   console.log('http://localhost:3000');
 });
 
@@ -42,30 +43,50 @@ io.sockets.on('connection', function(socket){
     usernames[user] = user;
 
     socket.join('room1');
-    socket.broadcast.to('room1').emit('updateinfo', 'SERVER', user + ' dołączył do gry!');
+    socket.broadcast.to('room1').emit('updateinfo', user + ' dołączył do gry!');
     socket.emit('updateusers', usednames);
     socket.broadcast.to('room1').emit('updateusers', usednames);
   });
 
   socket.on('userReady', function(){
     console.log('Użytkownik ' + socket.username + ' gotowy do gry');
-    socket.broadcast.to('room1').emit('updateinfo', 'SERVER', socket.username + ' jest gotów do gry');
+    socket.broadcast.to('room1').emit('updateinfo', socket.username + ' jest gotów do gry');
     readyUsers += 1;
     if (readyUsers === usednames.length){
         console.log('Rozpoczynamy grę');
         socket.broadcast.to('room1').emit('startgame', 'zaczynamy');
         socket.emit('startgame', 'zaczynamy');
+        socket.broadcast.to('room1').emit('districtinfo', wybudowaneDzielnice);
+        socket.emit('districtinfo', wybudowaneDzielnice);
         //graj();
       }
   });
 
   socket.on('action', function(data){
     console.log('Użytkownik ' + socket.username + ' wykonał akcję.');
-    socket.broadcast.to('room1').emit('updateinfo', 'SERVER', socket.username + ' wykonał akcję: ' + data);
+    socket.broadcast.to('room1').emit('updateinfo', socket.username + ' wykonał akcję: ' + data);
     socket.emit('updateinfo', 'wykonałeś akcję: ' + data);
   });
 
+  socket.on('build', function(data){
+    console.log('Użytkownik ' + socket.username + 'podjął decyzję o budowaniu.');
+    wybudowaneDzielnice += 1;
+    socket.broadcast.to('room1').emit('updateinfo', socket.username  + data);
+    socket.emit('updateinfo', 'podjąłeś decyzję: ' + data);
+  });
+
+  socket.on('endofround', function(){
+    koniecKolejkiUsers +=1;
+    if (koniecKolejkiUsers === readyUsers){
+      socket.broadcast.to('room1').emit('newround');
+      socket.emit('newround');
+      koniecKolejkiUsers = 0;
+    }
+  });
+
 });
+
+
 /*
 function graj(){
   while(liczbadzielnic < 8){

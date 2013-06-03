@@ -1,9 +1,8 @@
 <html>
 	<head>
-    	<script src="http://code.jquery.com/jquery-2.0.1.min.js" type='text/javascript'></script>
+    	<script src="/scripts/jQuery.js" type='text/javascript'></script>
 		<script src="/socket.io/socket.io.js" type='text/javascript'></script>
 		<script src="/scripts/connection.js" type='text/javascript'></script>
-    	<script src="/scripts/functions.js" type="text/javascript" charset="utf-8"></script>
     	<link rel="stylesheet" type="text/css" href="stylesheets/styles.css"></link>
     	<title>Cytadela - średniowieczna gra karciana</title>
     	<meta http-equiv="Content-Type" content="text/html"; charset="utf-8">
@@ -11,10 +10,10 @@
 	<body>
 		<div id="container">
 			<div id="left">
+				<div id="details">
+				</div>
 				<div id="cardsToPlay">
 				</div>
-				<div id="choosePersonCard">
-			</div>
 			<div id="center">
 				<div id="isReady">
 					<input type="button" name="btnRd" id="btnReady" value="Gotów do gry!" />
@@ -25,14 +24,14 @@
 						<input type="button" name="btnDis" id="btnDis" value="Pobierz 2 karty dzielnic" />
 					</div>
 					<div id="build">
-						<input type="button" name="btnBuild" id="btnBuild" value="Buduję" onClick="buduj();"/>
+						<input type="button" name="btnBuild" id="btnBuild" value="Buduję" />
 						<input type="button" name="btnBuild" id="btnNotBuild" value="Nie buduję" />
 					</div>
 				</div>
 				<div id="districts">
 					<table>
 						<tr>
-							<td>1</td>
+							<td id="bld1">1</td>
 							<td>2</td>
 							<td>3</td>
 							<td>4</td>
@@ -48,20 +47,10 @@
 			</div>
 			<div id="right">
 				<div id="users">
-					<p>Lista podłączonych userów</p>
 				</div>
 				<div id="gameInfo">
-					<p> </p>
 				</div>
 				<div id="info">
-					<p>
-						Tutaj będzie info o dzielnicach
-					</p>
-				</div>
-				<div id="details">
-					<p>
-						Tutaj szczegóły gracza
-					</p>
 				</div>
 			</div>
 		</div>
