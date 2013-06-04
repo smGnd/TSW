@@ -1,110 +1,70 @@
 body{
-	background-color: #AAC5E4;
-	background-image: url('images/bgtop.png');
+	background-color: #054480;
+	background-image: url('images/bgtop.png'), url('images/bg.png');
 	background-position: top;
-	background-repeat: repeat-x;
+	background-repeat: repeat-x, repeat;
+	color: #FFCC00;
+	font-family: times;
+	font-size: 12pt;
+	text-shadow:
+    -1px -1px 0 #000,
+    1px -1px 0 #000,
+    -1px 1px 0 #000,
+    1px 1px 0 #000;  
 }
 
-#container{
-	padding-top: 100px;
+#container {
+	margin: auto;
+	background-image: url('images/cytadela.png');
+	background-position: top center;
+	background-repeat: no-repeat;
+	padding-top: 130px;
+	width: 1080px;
 }
 
 #left{
-	width: 300px;
-	min-height: 200px;
-	background-color: #FF0000;
-}
-
-#cardsToPlay{
-	margin: 5px, 5px, 5px, 5px;
-	margin-left: 5px;
-	margin-right: 5px;
-	background-color: #FFFFC0;
+	text-align: center;
+	width: 200px;
+	height: 300px;
+	float: left;
 }
 
 #center{
-	margin-left: 320px;
-	margin-right: 10px;
-	min-height: 200px;
-	background-color: #00FF00;
-	text-align: center;
-	width=
-	padding-left: 5px;
-	padding-top: 5px;
-	padding-right: 5px;
-	padding-bottom: 5px;
+	position: absolute;
+	margin-left: 200px;
 }
 
-#choices{
-	background-color: #C0C0C0;
-	padding-left: 5px;
-	padding-top: 5px;
-	padding-right: 5px;
-	padding-bottom: 5px;
+#right{
+	width: 450px;
+	float: right;
 }
 
-#currentPlayer{
-	margin: 5px, 5px, 5px, 5px;
-	margin-left: 5px;
-	margin-right: 5px;
-	background-color: #FFFFC0;
+#rightleft{
+	float: right;
+	padding-left: 5px;
+	width: 350px;
+}
+
+#rightright{
+	float: left;
+	width: 90px;
 }
 
 #action{
-	margin: 5px, 5px, 5px, 5px;
-	margin-left: 5px;
-	margin-right: 5px;
-	background-color: #FFF000;
 	display: none;
 }
 
 #build{
-	margin: 5px, 5px, 5px, 5px;
-	margin-left: 5px;
-	margin-right: 5px;
-	background-color: #FFFFC0;
 	display: none;
 }
 
-#districts{
-	margin: 5px, 5px, 5px, 5px;
-	margin-left: 5px;
-	margin-right: 5px;
-	background-color: #FFF000;
-}
-
-#right{
-	margin-left: 800px;
-	width: 150px;
-	min-height: 200px;
-	background-color: #0000FF;
-}
-
-#users{
-	margin: 5px, 5px, 5px, 5px;
-	margin-left: 5px;
-	margin-right: 5px;
-	background-color: #FFFFC0;
-}
-
 #gameInfo{
-	margin: 5px, 5px, 5px, 5px;
-	margin-left: 5px;
-	margin-right: 5px;
-	background-color: #FFF000;
+	height: 100px;
+	width: 400px;
+	overflow-y: auto;
+	margin-left: 10px;
 }
 
-#info{
-	margin: 5px, 5px, 5px, 5px;
-	margin-left: 5px;
-	margin-right: 5px;
-	background-color: #FFFFC0;
+#howMany{
+	display: none;
 }
-
-#details{
-	margin: 5px, 5px, 5px, 5px;
-	margin-left: 5px;
-	margin-right: 5px;
-	background-color: #FFF000;
-}
-

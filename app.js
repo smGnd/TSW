@@ -8,14 +8,18 @@ var usernames = {};
 var usednames = [];
 var readyUsers = 0;
 var koniecKolejkiUsers = 0;
-var wybudowaneDzielnice = 0;
+var iloscDzielnicUsera = 0;
+var limitDzielnic = 5;
+var punktyUserów = 0;
+var zwyciezca = "";
+var maxDzielnic = 0;
 
 // listen for new web clients:
-server.listen(16777, function(){
+server.listen(3000, function(){
   console.log('http://localhost:3000');
 });
 
-var rooms = ['room1', 'room2'];
+var rooms = ['room1'];
 
 //app.listen(port);
 
@@ -39,9 +43,8 @@ io.sockets.on('connection', function(socket){
     socket.username = user;
     usernames[user] = user;
     usednames[usednames.length] = socket.username;
-    console.log('Użytkownik ' + user + ' dołączył do gry\nID socketa: ' + socket.id);
+    console.log('\n\n--------------------\nUżytkownik ' + user + ' dołączył do gry\nID socketa: ' + socket.id + '\n\n');
     usernames[user] = user;
-
     socket.join('room1');
     socket.broadcast.to('room1').emit('updateinfo', user + ' dołączył do gry!');
     socket.emit('updateusers', usednames);
@@ -49,83 +52,72 @@ io.sockets.on('connection', function(socket){
   });
 
   socket.on('userReady', function(){
-    console.log('Użytkownik ' + socket.username + ' gotowy do gry');
+    console.log('\n\n--------------------\nUżytkownik ' + socket.username + ' gotowy do gry\n\n');
     socket.broadcast.to('room1').emit('updateinfo', socket.username + ' jest gotów do gry');
     readyUsers += 1;
     if (readyUsers === usednames.length){
-        console.log('Rozpoczynamy grę');
+        console.log('\n\n--------------------\nRozpoczynamy grę\n\n');
         socket.broadcast.to('room1').emit('startgame', 'zaczynamy');
         socket.emit('startgame', 'zaczynamy');
-        socket.broadcast.to('room1').emit('districtinfo', wybudowaneDzielnice);
-        socket.emit('districtinfo', wybudowaneDzielnice);
-        //graj();
       }
   });
 
   socket.on('action', function(data){
-    console.log('Użytkownik ' + socket.username + ' wykonał akcję.');
+    console.log('\n\n--------------------\nUżytkownik ' + socket.username + ' wykonał akcję: ' + data + '\n\n');
     socket.broadcast.to('room1').emit('updateinfo', socket.username + ' wykonał akcję: ' + data);
     socket.emit('updateinfo', 'wykonałeś akcję: ' + data);
   });
 
   socket.on('build', function(data){
-    console.log('Użytkownik ' + socket.username + 'podjął decyzję o budowaniu.');
-    wybudowaneDzielnice += 1;
+    console.log('\n\n--------------------\nUżytkownik ' + socket.username + data + '\n\n');
+    console.log('\n\n--------------------\nWysyłam updateinfo\n\n');
     socket.broadcast.to('room1').emit('updateinfo', socket.username  + data);
     socket.emit('updateinfo', 'podjąłeś decyzję: ' + data);
   });
 
-  socket.on('endofround', function(){
+  socket.on('endofround', function(data){
+    iloscDzielnicUsera = data;
+    if (maxDzielnic < data){
+      maxDzielnic = data;
+      socket.broadcast.to('room1').emit('districtinfo', maxDzielnic);
+      socket.emit('districtinfo', maxDzielnic);
+    }
+    console.log('\n\n--------------------\nUżytkownik ' + socket.username + ' zakończył kolejkę.\nMa on ' + iloscDzielnicUsera + ' dzielnic.\n\n');
     koniecKolejkiUsers +=1;
     if (koniecKolejkiUsers === readyUsers){
-      socket.broadcast.to('room1').emit('newround');
-      socket.emit('newround');
-      koniecKolejkiUsers = 0;
+      if (maxDzielnic === limitDzielnic){
+        console.log('\n\n--------------------\nKONIEC GRY!!!\n\n');
+        socket.emit('endofgame');
+      } else {
+        console.log('\n\n--------------------\nNOWA KOLEJKA\n\n');
+        socket.broadcast.to('room1').emit('newround');
+        socket.emit('newround');
+        koniecKolejkiUsers = 0;
+      }
     }
   });
 
-});
-
-
-/*
-function graj(){
-  while(liczbadzielnic < 8){
-    ustalKolejnosc();
-    for (var i=0; i<graja.length; i++){
-      wywolajGracza(i);
+  socket.on('punkty', function(data){
+    console.log('\n\n--------------------\nPrzyjąłem punkty od użytkownika: ' + socket.username + ', liczba punktów: ' + data + '\n\n');
+    if (data > punktyUserów){
+      punktyUserów = data;
+      zwyciezca = socket.username;
     }
-  }
-  socket.emit('koniecgry');
-  socket.on('punkty');
-  liczPunktyDajZwyciezce();
-}
+    console.log('\n\n--------------------\nZwyciężył ' + socket.username + ' zdobywając ' + data + ' punktów.\n\n')
+    socket.broadcast.to('room1').emit('zwyciezyl', socket.username);
+    socket.emit('zwyciezyl', 'Zwyciężył ' + socket.username + ' zdobywając ' + data + ' punktów.');
+  });
 
-function ustalKolejnosc(){
-  /*
-  numerJeden = math.random() * 10 % liczba graczy
-  graja[0] = usednames[numerJeden];
-  for(i=1, i<usednames.length, i++){
-    graja[i] = usednames[numerJeden+i];
-    j = i
-  }
-  for (i = j, i<usednames.length, i++){
-    graja[i] = usednames[numerJeden-i];
-  }
-  */
-//}
+  socket.on('disconnect', function () {
+    for (i=0; i<usednames.length; i++){
+      if (usednames[i] === socket.username){
+        usednames.splice(i, 1);
+      }
+    }
+    console.log('\n\n--------------------\n' + socket.username + 'poszedł w chuj\n\n');
+    socket.emit('updateusers', usednames);
+    socket.broadcast.to('room1').emit('updateusers', usednames);
+    socket.broadcast.emit('updatechat', 'świzdu gwizdu, ' + socket.username + ' poszedł w pizdu');
+  });
 
-//function wywolajGracza(numer){
-  /*
-  socket emit(play);
-  */
-//}
-
-//function liczPunktyDajZwyciezce(){
-  /*
-  for (i=0, i<usednames.length, i++){
-   sortowanie kto ma najwięcej punktów
-   zapisanie do tablicy pod indeksem 0
-  }
-  emit (wynik[0])
-  */
-//}
+});
